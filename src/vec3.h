@@ -18,16 +18,17 @@ public:
 
   inline double mag(); // returns magnitude of vector
   inline Vec3 unit(); // returns unit vector
+
 };
 
-inline Vec3 operator+(const Vec3 & v1, const Vec3 & v2);
-inline Vec3 operator*(const Vec3 & v1, const Vec3 & v2);
+Vec3 operator+(const Vec3 & v1, const Vec3 & v2);
+Vec3 operator*(const Vec3 & v1, const Vec3 & v2);
 
-template<class NUMBER> inline Vec3 operator/(const Vec3 & v1, NUMBER c);
-template<class NUMBER> inline Vec3 operator*(const Vec3 & v1, NUMBER c);
-template<class NUMBER> inline Vec3 operator*(class c, const Vec3 & v1);
+Vec3 operator/(const Vec3 & v1, double c);
+Vec3 operator*(const Vec3 & v1, double c);
+Vec3 operator*(double c, const Vec3 & v1);
 
-inline double dot(const Vec3 & v1, const Vec3 & v2);
-inline Vec3 cross(const Vec3 & v1, const Vec3 & v2);
+double dot(const Vec3 & v1, const Vec3 & v2);
+Vec3 cross(const Vec3 & v1, const Vec3 & v2);
 
 #endif
