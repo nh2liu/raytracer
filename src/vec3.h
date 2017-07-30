@@ -1,6 +1,6 @@
 #ifndef _VEC_3_H
 #define _VEC_3_H
-
+#include <iostream>
 /*
 Vec3 basic vector class for raytracing
 */
@@ -21,6 +21,8 @@ public:
 
 };
 
+bool operator==(const Vec3 &  v1, const Vec3 & v2);
+
 Vec3 operator+(const Vec3 & v1, const Vec3 & v2);
 Vec3 operator-(const Vec3 & v1, const Vec3 & v2);
 Vec3 operator*(const Vec3 & v1, const Vec3 & v2);
@@ -28,6 +30,8 @@ Vec3 operator*(const Vec3 & v1, const Vec3 & v2);
 Vec3 operator/(const Vec3 & v1, double c);
 Vec3 operator*(const Vec3 & v1, double c);
 Vec3 operator*(double c, const Vec3 & v1);
+
+std::ostream & operator<<(std::ostream & out, const Vec3 & v1);
 
 double dot(const Vec3 & v1, const Vec3 & v2);
 Vec3 cross(const Vec3 & v1, const Vec3 & v2);
