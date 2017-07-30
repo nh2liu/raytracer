@@ -4,6 +4,7 @@
 
 class gObject {
 public:
+  virtual ~gObject();
   virtual bool intersect(const Ray & r,
                          const double tMin,
                          const double tMax) const = 0;
