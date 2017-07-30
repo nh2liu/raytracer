@@ -10,7 +10,7 @@ private:
 public:
   Sphere();
   Sphere(const Vec3 center, const double radius);
-  bool intersect(const Ray & r, const double tMin, const double tMax) const;
+  double intersect(const Ray & r, const double tMin, const double tMax) const;
 };
 
 #endif

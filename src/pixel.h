@@ -11,6 +11,9 @@ public:
   inline double r() const {return r_;}
   inline double g() const {return g_;}
   inline double b() const {return b_;}
+
+  void operator+=(const Pixel & p2);
+  void operator/=(double c);
 };
 
 Pixel operator+(const Pixel & p1, const Pixel & p2);

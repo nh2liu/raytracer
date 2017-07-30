@@ -20,3 +20,15 @@ Pixel operator*(const Pixel & p1, double c) {
 Pixel operator*(double c, const Pixel & p1) {
   return Pixel(p1.r() * c, p1.g() * c, p1.b() * c);
 }
+
+void Pixel::operator+=(const Pixel & p2) {
+  r_ += p2.r_;
+  g_ += p2.g_;
+  b_ += p2.b_;
+}
+
+void Pixel::operator/=(double c) {
+  r_ /= c;
+  g_ /= c;
+  b_ /= c;
+}

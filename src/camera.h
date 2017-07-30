@@ -16,10 +16,12 @@ private:
   Vec3 horizontal;
   Vec3 vertical;
   Vec3 origin;
+  int aliasing_its;
 
   Pixel color(const Ray & r, std::vector <gObject * > & objects);
 public:
-  Camera(std::string name, int x, int y);
+  Camera(std::string name, int x, int y,
+         int aliasing_level = 0);
   std::string render(std::vector<gObject * > objects, int info_level = 1);
 };
 
