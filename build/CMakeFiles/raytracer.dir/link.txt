@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11    CMakeFiles/raytracer.dir/src/camera.cc.o CMakeFiles/raytracer.dir/src/g_object.cc.o CMakeFiles/raytracer.dir/src/main.cc.o CMakeFiles/raytracer.dir/src/pixel.cc.o CMakeFiles/raytracer.dir/src/ray.cc.o CMakeFiles/raytracer.dir/src/sphere.cc.o CMakeFiles/raytracer.dir/src/vec3.cc.o  -o raytracer -rdynamic 
