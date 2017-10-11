@@ -38,7 +38,7 @@ int main(int argc, char ** argv) {
   ofs.open((path + fileName).c_str());
 
   ofs << "P3" << endl << x << ' ' << y << endl << 255 << endl;
-  ofs << cam1.render(objects);
+  ofs << cam1.render(objects, 1, 2);
 
   for (gObject * obj : objects) {
     delete obj;

@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <sstream>
 #include <random>
+#include <cmath>
 #include "camera.h"
 #include "g_object.h"
 #include "vec3.h"
@@ -23,7 +24,8 @@ Vec3 randomUnitSphereVec() {
   return rng;
 }
 
-Camera::Camera(string name, int x_res, int y_res, int aliasing_level, int maxBounces) :
+Camera::Camera(string name, int x_res, int y_res, int aliasing_level,
+               int maxBounces) :
 name{name},
 x_res{x_res},
 y_res{y_res},
@@ -36,11 +38,12 @@ maxBounces{maxBounces} {}
 
 Pixel Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
   double tMax = 1000;
+  double tMin = 0.001;
   double lowestT = tMax;
   gObject * lowestObj = nullptr;
   for (gObject * obj : objects) {
     double t = obj->intersect(r, 0.0, tMax);
-    if (t > -1 && t < lowestT) {
+    if (t > tMin && t < lowestT) {
       lowestObj = obj;
       lowestT = t;
     }
@@ -60,7 +63,15 @@ Pixel Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
   }
 }
 
-string Camera::render(vector<gObject * > objects, int info_level) {
+
+Pixel gammaTransform(Pixel & p, int gamma) {
+  double gammaInv = 1. / gamma;
+  return Pixel(pow(p.r(),  gammaInv),
+               pow(p.g(),  gammaInv),
+               pow(p.b(),  gammaInv));
+}
+
+string Camera::render(vector<gObject * > objects, int info_level, int gamma) {
   ostringstream oss;
   // code convention is written from top to bottom
   if (info_level == 1) cout << "Rendering " << name << endl;
@@ -82,7 +93,7 @@ string Camera::render(vector<gObject * > objects, int info_level) {
         cout << progress_counter * 100 / (x_res * y_res) << "% done." << endl;
       }
       pxl /= (aliasing_its + 1);
-      oss << pxl;
+      oss << gammaTransform(pxl, gamma);
     }
   }
   return oss.str();
