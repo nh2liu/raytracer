@@ -1,3 +1,4 @@
+#include <math.h>
 #include "sphere.h"
 #include "g_object.h"
 
@@ -10,17 +11,23 @@ double Sphere::intersect(const Ray & r, const double tMin, const double tMax) co
   const Vec3 d = r.direction();
   const Vec3 p = r.position();
   const Vec3 p_c = p - center;
+
+  // solving a*t^2 + b*t + c
   const double a = dot(d, d);
   const double b = 2.0 * dot(d, p_c);
   const double c = dot(p_c, p_c) - radius * radius;
   const double discriminant = b * b - 4.0 * a * c;
 
   // smallest t
-  double t = (- b - discriminant) / (2.0 * a);
+  double t = (- b - sqrt(discriminant)) / (2.0 * a);
   
   if (discriminant < 0 || t < tMin || t > tMax) {
     return -1;
   } else {
     return t;
   }
+}
+
+Vec3 Sphere::normal(const Vec3 poi) const {
+  return (poi - center).unit();
 }

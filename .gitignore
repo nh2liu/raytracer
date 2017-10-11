@@ -1,6 +1,6 @@
 #folder
-build/
-renders/
+build/*
+renders/*
 # Prerequisites
 *.d
 

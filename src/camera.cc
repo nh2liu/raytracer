@@ -1,6 +1,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <random>
 #include "camera.h"
@@ -31,14 +32,16 @@ Pixel Camera::color(const Ray & r, vector <gObject * > & objects) {
       lowestT = t;
     }
   }
-  // hit something
+  // hit nothing
   if (lowestObj == nullptr) {
     Vec3 d_unit = r.direction().unit();
     double t = 0.5 * (d_unit.y() + 1.0);
     return (1.0-t) * Pixel(1.0, 1.0, 1.0) + t * Pixel(0.5, 0.7, 1.0);
     // Sphere Norms
+    // hit something
   } else {
-    Vec3 N = (r.positionAt(lowestT) - Vec3(0,0,-1)).unit();
+    Vec3 poi = r.positionAt(lowestT);
+    Vec3 N = lowestObj->normal(poi);
     return 0.5 * Pixel(N.x() + 1, N.y() + 1, N.z() + 1);
   }
 }
@@ -51,15 +54,22 @@ string Camera::render(vector<gObject * > objects, int info_level) {
   ostringstream oss;
   // code convention is written from top to bottom
   if (info_level == 1) cout << "Rendering " << name << endl;
+  int progress_counter = 0;
 
   for (int j = y_res - 1; j >= 0; j--) {
     for (int i = 0; i < x_res; i++) {
       Pixel pxl = Pixel();
+      // adding antialiasing
       for (int alias = 0; alias <= aliasing_its; ++alias) {
         double u = double(i + randzeroone()) / double(x_res);
         double d = double(j + randzeroone()) / double(y_res);
         Ray r(origin, lowerLeftCorner + horizontal * u + vertical * d);
         pxl += color(r, objects);
+      }
+      progress_counter++;
+      // printing progress counter
+      if (progress_counter % ((x_res * y_res)/10) == 0) {
+        cout << progress_counter * 100 / (x_res * y_res) << "% done." << endl;
       }
       pxl /= (aliasing_its + 1);
       oss << pxl;
