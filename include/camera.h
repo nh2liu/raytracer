@@ -17,11 +17,12 @@ private:
   Vec3 vertical;
   Vec3 origin;
   int aliasing_its;
+  int maxBounces;
 
-  Pixel color(const Ray & r, std::vector <gObject * > & objects);
+  Pixel color(const Ray & r, std::vector <gObject * > & objects, int bounces = 0);
 public:
   Camera(std::string name, int x, int y,
-         int aliasing_level = 0);
+         int aliasing_level = 0, int maxBounces = 30);
   std::string render(std::vector<gObject * > objects, int info_level = 1);
 };
 

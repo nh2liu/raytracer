@@ -31,7 +31,7 @@ int main(int argc, char ** argv) {
 
   // creating test objects
   vector<gObject * > objects;
-  objects.push_back(new Sphere(Vec3(0, 0, -1), 0.2));
+  objects.push_back(new Sphere(Vec3(0, 0, -1), 0.5));
   objects.push_back(new Sphere(Vec3(0, -100.5, -1), 100));
 
   ofstream ofs;
