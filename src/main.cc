@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <vector>
 #include "metal.h"
@@ -10,47 +11,60 @@
 using namespace std;
 
 int main(int argc, char ** argv) {
-  // dimensions of the picture
-  int x; int y;
+  // dimensions of the picture, antialiasing level
+  int x, y, aalias;
 
   // file name
   string fileName;
 
   // path to place completed renders
   string path = "../renders/";
-  if (argc > 1) {
-    fileName = argv[1];
-  } else {
-    fileName = "rendered_img.ppm";
-  }
-  if (argc > 3) {
-    x = atoi(argv[2]);
-    y = atoi(argv[3]);
-  } else {
-      x = 200;
-      y = 100;
-  }
-  
-  Camera cam1("Front Camera", x, y, 10);
 
+  ifstream cameraConfig{"../camera.cfg"};
+  cameraConfig >> fileName >> x >> y >> aalias;
+  
+  Camera cam1("Front Camera", x, y, aalias);
+  cout << "Producing picture in file " << fileName << "." << endl;
+  cout << "Dimensions " << x << " " << y << endl;
+  cout << "Antialiasing level " << aalias << endl;
+  
   // creating test objects
   vector<gObject * > objects;
   vector<Material * > materials;
-  //objects.push_back(new Triangle(Vec3(1,0,-2), Vec3(0.5,0.5,-2),Vec3(-1,0,-2)));
-  gObject * sphere1 = new Sphere(Vec3(0, 0, -1), 0.5);
-  gObject * sphere2 = new Sphere(Vec3(0, -100.5, -1), 100);
 
-  Material * material1 = new Lambertian(Pixel(0.3,0.3,0.8));
-  Material * material2 = new Metal(Pixel(0.5,0.5,0.5));
+  // reading in from landscape
+  ifstream ifs{"../landscape.cfg"};
+  string line;
 
-  sphere1->setMaterial(material1);
-  sphere2->setMaterial(material2);
-  
-  objects.push_back(sphere1);
-  objects.push_back(sphere2);
-  materials.push_back(material1);
-  materials.push_back(material2);
+  while (getline(ifs, line)) {
+    istringstream iss{line};
+    string type; string materialType;
+    gObject * obj;
+    Material * m;
+    double r,g,b;
+    iss >> type;
+    if (type == "sphere") {
+      double x, y, z, radius;
+      iss >> x >> y >> z >> radius;
+      obj = new Sphere(Vec3(x,y,z), radius);
+    }
 
+    iss >> materialType >> r >> g >> b;
+    if (materialType == "lambertian") {
+      m = new Lambertian(Pixel(r, g, b));
+    } else if (materialType == "metal") {
+      m = new Metal(Pixel(r, g, b));
+    } else {
+      throw 20;
+    }
+
+    obj->setMaterial(m);
+    objects.push_back(obj);
+    materials.push_back(m);
+    cout << "Loaded a " << type << " with material " << materialType << endl;
+  }
+
+  // rendering landscape
   ofstream ofs;
   ofs.open((path + fileName).c_str());
 
