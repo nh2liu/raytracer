@@ -16,8 +16,8 @@ public:
   inline double y() const {return x1;}
   inline double z() const {return x2;}
 
-  double mag(); // returns magnitude of vector
-  Vec3 unit(); // returns unit vector
+  double mag() const; // returns magnitude of vector
+  Vec3 unit() const; // returns unit vector
 
 };
 

@@ -1,5 +1,5 @@
-#ifndef _COLOR_H
-#define _COLOR_H
+#ifndef _PIXEL_H
+#define _PIXEL_H
 #include <iostream>
 
 class Pixel {
@@ -18,6 +18,7 @@ public:
 
 Pixel operator+(const Pixel & p1, const Pixel & p2);
 Pixel operator/(const Pixel & p1, double c);
+Pixel operator*(const Pixel & p1, const Pixel & p2);
 Pixel operator*(const Pixel & p1, double c);
 Pixel operator*(double c, const Pixel & p1);
 

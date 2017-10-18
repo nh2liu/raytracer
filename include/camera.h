@@ -23,7 +23,7 @@ private:
 public:
   Camera(std::string name, int x, int y,
          int aliasing_level = 0, int maxBounces = 30);
-  std::string render(std::vector<gObject * > objects, int info_level = 1);
+  std::string render(std::vector<gObject * > objects, int info_level = 1, int gamma = 1);
 };
 
 #endif

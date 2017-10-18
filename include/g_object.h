@@ -2,8 +2,13 @@
 #define _gObject_h_
 #include "ray.h"
 #include "vec3.h"
+
+class Material;
+
 // main object class to detect hits
 class gObject {
+private:
+	Material * material;
 public:
   virtual ~gObject();
 
@@ -16,6 +21,10 @@ public:
   // returns a normal vector to the hit (this vector is unit)
   // takes in the point of intersection between the ray and object
   virtual Vec3 normal(const Vec3 poi) const = 0;
+
+  // getting and setting material
+  Material * getMaterial();
+  void setMaterial(Material * m);
 };
 
 #endif

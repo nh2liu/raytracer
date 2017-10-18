@@ -6,11 +6,11 @@ Vec3::Vec3(){}
 
 Vec3::Vec3(double x, double y, double z) : x0{x}, x1{y}, x2{z} {}
 
-double Vec3::mag() {
+double Vec3::mag() const {
   return sqrt(x0 * x0 + x1 * x1 + x2 * x2);
 }
 
-Vec3 Vec3::unit() {
+Vec3 Vec3::unit() const {
   return (*this) / mag();
 }
 

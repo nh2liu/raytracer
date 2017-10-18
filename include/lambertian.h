@@ -1,0 +1,11 @@
+#ifndef __LAMBERTIAN_H__
+#define __LAMBERTIAN_H__
+#include "material.h"
+
+class Lambertian : public Material {
+public:
+	Lambertian(const Pixel & attenuation);
+	Vec3 scatter(const Ray & r, const gObject * obj, const double t) const;
+};
+
+#endif

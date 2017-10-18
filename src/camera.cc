@@ -5,23 +5,18 @@
 #include <sstream>
 #include <random>
 #include <cmath>
+
 #include "camera.h"
+#include "material.h"
 #include "g_object.h"
 #include "vec3.h"
 #include "pixel.h"
 #include "ray.h"
+
 using namespace std;
 
 double randzeroone() {
   return rand() / (RAND_MAX + 1.);
-}
-
-Vec3 randomUnitSphereVec() {
-  Vec3 rng;
-  do {
-    rng = 2.0 * Vec3(randzeroone(), randzeroone(), randzeroone()) - Vec3(1,1,1);
-  } while (rng.mag() >= 1);
-  return rng;
 }
 
 Camera::Camera(string name, int x_res, int y_res, int aliasing_level,
@@ -58,8 +53,10 @@ Pixel Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
   } else {
     // diffuse material at the moment
     Vec3 poi = r.positionAt(lowestT);
-    Vec3 newVec = poi + lowestObj->normal(poi) + randomUnitSphereVec();
-    return 0.5 * color(Ray(poi, newVec), objects, bounces++);
+    Material * m = lowestObj->getMaterial();
+    Vec3 newVec = m->scatter(r, lowestObj, lowestT);
+    Pixel attenuation = m->getAttenuation();
+    return attenuation * color(Ray(poi, newVec), objects, bounces++);
   }
 }
 
