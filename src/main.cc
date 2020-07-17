@@ -4,7 +4,7 @@
 #include <vector>
 #include "metal.h"
 #include "lambertian.h"
-#include "pixel.h"
+#include "rgb_unit.h"
 #include "sphere.h"
 #include "camera.h"
 #include "triangle.h"
@@ -51,9 +51,9 @@ int main(int argc, char ** argv) {
 
     iss >> materialType >> r >> g >> b;
     if (materialType == "lambertian") {
-      m = new Lambertian(Pixel(r, g, b));
+      m = new Lambertian(RGBUnit(r, g, b));
     } else if (materialType == "metal") {
-      m = new Metal(Pixel(r, g, b));
+      m = new Metal(RGBUnit(r, g, b));
     } else {
       throw 20;
     }

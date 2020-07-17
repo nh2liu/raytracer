@@ -1,6 +1,6 @@
 #include "lambertian.h"
 
-Lambertian::Lambertian(const Pixel & attenuation) : Material(attenuation) {}
+Lambertian::Lambertian(const RGBUnit & attenuation) : Material(attenuation) {}
 
 float static randzeroone() {
   return rand() / (RAND_MAX + 1.);

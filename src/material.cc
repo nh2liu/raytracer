@@ -1,8 +1,8 @@
 #include "material.h"
 
-Material::Material(const Pixel & attenuation) : attenuation{attenuation} {}
+Material::Material(const RGBUnit & attenuation) : attenuation{attenuation} {}
 
 
-Pixel Material::getAttenuation() {
+RGBUnit Material::getAttenuation() {
 	return attenuation;
 }

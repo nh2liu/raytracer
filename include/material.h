@@ -2,15 +2,15 @@
 #define __MATERIAL_H__
 
 #include "g_object.h"
-#include "pixel.h"
+#include "rgb_unit.h"
 
 class Material {
 private:
-	Pixel attenuation;
+	RGBUnit attenuation;
 public:
-	Material(const Pixel & attenuation);
+	Material(const RGBUnit & attenuation);
 	virtual Vec3 scatter(const Ray & r, const gObject * obj, const float t) const = 0;
-	Pixel getAttenuation();
+	RGBUnit getAttenuation();
 };
 
 #endif

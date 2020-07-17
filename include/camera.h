@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include "vec3.h"
-#include "pixel.h"
+#include "rgb_unit.h"
 #include "ray.h"
 
 class gObject;
@@ -19,7 +19,7 @@ private:
   int aliasing_its;
   int maxBounces;
 
-  Pixel color(const Ray & r, std::vector <gObject * > & objects, int bounces = 0);
+  RGBUnit color(const Ray & r, std::vector <gObject * > & objects, int bounces = 0);
 public:
   Camera(std::string name, int x, int y,
          int aliasing_level = 0, int maxBounces = 30);

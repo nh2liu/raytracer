@@ -5,7 +5,7 @@
 
 class Metal : public Material {
 public:
-	Metal(const Pixel & attenuation);
+	Metal(const RGBUnit & attenuation);
 	Vec3 scatter(const Ray & r, const gObject * obj, const float t) const;
 };
 

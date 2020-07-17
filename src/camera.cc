@@ -10,7 +10,7 @@
 #include "material.h"
 #include "g_object.h"
 #include "vec3.h"
-#include "pixel.h"
+#include "rgb_unit.h"
 #include "ray.h"
 
 using namespace std;
@@ -31,7 +31,7 @@ origin{Vec3(0.0, 0.0, 0.0)},
 aliasing_its{aliasing_level * 20},
 maxBounces{maxBounces} {}
 
-Pixel Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
+RGBUnit Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
   float tMax = 1000;
   float tMin = 0.001;
   float lowestT = tMax;
@@ -47,7 +47,7 @@ Pixel Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
   if (lowestObj == nullptr || bounces == maxBounces) {
     Vec3 d_unit = r.direction().unit();
     float t = 0.5 * (d_unit.y() + 1.0);
-    return (1.0-t) * Pixel(1.0, 1.0, 1.0) + t * Pixel(0.5, 0.7, 1.0);
+    return (1.0-t) * RGBUnit(1.0, 1.0, 1.0) + t * RGBUnit(0.5, 0.7, 1.0);
     // Sphere Norms
     // hit something
   } else {
@@ -55,15 +55,15 @@ Pixel Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
     Vec3 poi = r.positionAt(lowestT);
     Material * m = lowestObj->getMaterial();
     Vec3 newVec = m->scatter(r, lowestObj, lowestT);
-    Pixel attenuation = m->getAttenuation();
+    RGBUnit attenuation = m->getAttenuation();
     return attenuation * color(Ray(poi, newVec), objects, bounces++);
   }
 }
 
 
-Pixel gammaTransform(Pixel & p, int gamma) {
+RGBUnit gammaTransform(RGBUnit & p, int gamma) {
   float gammaInv = 1. / gamma;
-  return Pixel(pow(p.r(),  gammaInv),
+  return RGBUnit(pow(p.r(),  gammaInv),
                pow(p.g(),  gammaInv),
                pow(p.b(),  gammaInv));
 }
@@ -76,7 +76,7 @@ string Camera::render(vector<gObject * > objects, int info_level, int gamma) {
 
   for (int j = y_res - 1; j >= 0; j--) {
     for (int i = 0; i < x_res; i++) {
-      Pixel pxl = Pixel();
+      RGBUnit pxl = RGBUnit();
       // adding antialiasing
       for (int alias = 0; alias <= aliasing_its; ++alias) {
         float u = float(i + randzeroone()) / float(x_res);

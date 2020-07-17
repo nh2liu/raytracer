@@ -1,6 +1,6 @@
 #include "metal.h"
 
-Metal::Metal(const Pixel & attenuation) : Material(attenuation) {}
+Metal::Metal(const RGBUnit & attenuation) : Material(attenuation) {}
 
 Vec3 reflect(const Vec3 & v, const Vec3 & norm) {
 	return v - 2 * dot(v,norm) * norm;
