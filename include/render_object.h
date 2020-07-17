@@ -1,16 +1,16 @@
-#ifndef _gObject_h_
-#define _gObject_h_
+#ifndef _RenderObject_h_
+#define _RenderObject_h_
 #include "ray.h"
 #include "vec3.h"
 
 class Material;
 
 // main object class to detect hits
-class gObject {
+class RenderObject {
 private:
 	Material * material;
 public:
-  virtual ~gObject();
+  virtual ~RenderObject();
 
   // returns the intersection of the ray if hit
   // -1 otherwise

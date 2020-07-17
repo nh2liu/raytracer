@@ -8,7 +8,7 @@
 
 #include "camera.h"
 #include "material.h"
-#include "g_object.h"
+#include "render_object.h"
 #include "vec3.h"
 #include "rgb_unit.h"
 #include "ray.h"
@@ -31,12 +31,12 @@ origin{Vec3(0.0, 0.0, 0.0)},
 aliasing_its{aliasing_level * 20},
 maxBounces{maxBounces} {}
 
-RGBUnit Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
+RGBUnit Camera::color(const Ray & r, vector <RenderObject * > & objects, int bounces) {
   float tMax = 1000;
   float tMin = 0.001;
   float lowestT = tMax;
-  gObject * lowestObj = nullptr;
-  for (gObject * obj : objects) {
+  RenderObject * lowestObj = nullptr;
+  for (RenderObject * obj : objects) {
     float t = obj->intersect(r, 0.0, tMax);
     if (t > tMin && t < lowestT) {
       lowestObj = obj;
@@ -68,7 +68,7 @@ RGBUnit gammaTransform(RGBUnit & p, int gamma) {
                pow(p.b(),  gammaInv));
 }
 
-string Camera::render(vector<gObject * > objects, int info_level, int gamma) {
+string Camera::render(vector<RenderObject * > objects, int info_level, int gamma) {
   ostringstream oss;
   // code convention is written from top to bottom
   if (info_level == 1) cout << "Rendering " << name << endl;

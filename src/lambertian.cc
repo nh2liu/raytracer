@@ -14,7 +14,7 @@ Vec3 randomUnitSphereVec() {
   return rng;
 }
 
- Vec3 Lambertian::scatter(const Ray & r, const gObject * obj, const float t) const {
+ Vec3 Lambertian::scatter(const Ray & r, const RenderObject * obj, const float t) const {
 	Vec3 poi = r.positionAt(t);
     Vec3 newVec = poi + obj->normal(poi) + randomUnitSphereVec();
     return newVec;

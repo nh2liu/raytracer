@@ -29,7 +29,7 @@ int main(int argc, char ** argv) {
   cout << "Antialiasing level " << aalias << endl;
   
   // creating test objects
-  vector<gObject * > objects;
+  vector<RenderObject * > objects;
   vector<Material * > materials;
 
   // reading in from landscape
@@ -39,7 +39,7 @@ int main(int argc, char ** argv) {
   while (getline(ifs, line)) {
     istringstream iss{line};
     string type; string materialType;
-    gObject * obj;
+    RenderObject * obj;
     Material * m;
     float r,g,b;
     iss >> type;
@@ -76,7 +76,7 @@ int main(int argc, char ** argv) {
     delete m;
   }
 
-  for (gObject * obj : objects) {
+  for (RenderObject * obj : objects) {
     delete obj;
   }
 

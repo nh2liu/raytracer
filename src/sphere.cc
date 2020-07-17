@@ -1,6 +1,6 @@
 #include <math.h>
 #include "sphere.h"
-#include "g_object.h"
+#include "render_object.h"
 
 Sphere::Sphere() : radius{0} {}
 

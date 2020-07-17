@@ -6,7 +6,7 @@
 #include "rgb_unit.h"
 #include "ray.h"
 
-class gObject;
+class RenderObject;
 
 class Camera {
 private:
@@ -19,11 +19,11 @@ private:
   int aliasing_its;
   int maxBounces;
 
-  RGBUnit color(const Ray & r, std::vector <gObject * > & objects, int bounces = 0);
+  RGBUnit color(const Ray & r, std::vector <RenderObject * > & objects, int bounces = 0);
 public:
   Camera(std::string name, int x, int y,
          int aliasing_level = 0, int maxBounces = 30);
-  std::string render(std::vector<gObject * > objects, int info_level = 1, int gamma = 1);
+  std::string render(std::vector<RenderObject * > objects, int info_level = 1, int gamma = 1);
 };
 
 #endif
