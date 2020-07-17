@@ -5,12 +5,14 @@
 #include "rgb_unit.h"
 
 class Material {
-private:
-	RGBUnit attenuation;
-public:
-	Material(const RGBUnit & attenuation);
-	virtual Vec3 scatter(const Ray & r, const RenderObject * obj, const float t) const = 0;
-	RGBUnit getAttenuation();
+  private:
+    RGBUnit attenuation;
+
+  public:
+    Material(const RGBUnit &attenuation);
+    virtual Vec3 scatter(const Ray &r, const RenderObject *obj,
+                         const float t) const = 0;
+    RGBUnit getAttenuation();
 };
 
 #endif

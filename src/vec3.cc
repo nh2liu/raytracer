@@ -1,71 +1,52 @@
-#include <cmath>
 #include "vec3.h"
+#include <cmath>
 using namespace std;
 
-Vec3::Vec3(){}
+Vec3::Vec3() {}
 
 Vec3::Vec3(float x, float y, float z) : x0{x}, x1{y}, x2{z} {}
 
-float Vec3::mag() const {
-  return sqrt(x0 * x0 + x1 * x1 + x2 * x2);
+float Vec3::mag() const { return sqrt(x0 * x0 + x1 * x1 + x2 * x2); }
+
+Vec3 Vec3::unit() const { return (*this) / mag(); }
+
+Vec3 operator+(const Vec3 &v1, const Vec3 &v2) {
+    return Vec3(v1.x() + v2.x(), v1.y() + v2.y(), v1.z() + v2.z());
 }
 
-Vec3 Vec3::unit() const {
-  return (*this) / mag();
+Vec3 operator-(const Vec3 &v1, const Vec3 &v2) {
+    return Vec3(v1.x() - v2.x(), v1.y() - v2.y(), v1.z() - v2.z());
+}
+Vec3 operator*(const Vec3 &v1, const Vec3 &v2) {
+    return Vec3(v1.x() * v2.x(), v1.y() * v2.y(), v1.z() * v2.z());
 }
 
- Vec3 operator+(const Vec3 & v1, const Vec3 & v2) {
-  return Vec3(v1.x() + v2.x(),
-              v1.y() + v2.y(),
-              v1.z() + v2.z());
+Vec3 operator/(const Vec3 &v1, float c) {
+    return Vec3(v1.x() / c, v1.y() / c, v1.z() / c);
 }
 
-Vec3 operator-(const Vec3 & v1, const Vec3 & v2) {
- return Vec3(v1.x() - v2.x(),
-             v1.y() - v2.y(),
-             v1.z() - v2.z());
-}
- Vec3 operator*(const Vec3 & v1, const Vec3 & v2) {
-  return Vec3(v1.x() * v2.x(),
-              v1.y() * v2.y(),
-              v1.z() * v2.z());
+Vec3 operator*(const Vec3 &v1, float c) {
+    return Vec3(v1.x() * c, v1.y() * c, v1.z() * c);
 }
 
-Vec3 operator/(const Vec3 & v1, float c) {
-  return Vec3(v1.x() / c,
-              v1.y() / c,
-              v1.z() / c);
+Vec3 operator*(float c, const Vec3 &v1) {
+    return Vec3(v1.x() * c, v1.y() * c, v1.z() * c);
 }
 
-Vec3 operator*(const Vec3 & v1, float c) {
-  return Vec3(v1.x() * c,
-              v1.y() * c,
-              v1.z() * c);
+bool operator==(const Vec3 &v1, const Vec3 &v2) {
+    return v1.x() == v2.x() && v1.y() == v2.y() && v1.z() == v1.z();
 }
 
-Vec3 operator*(float c, const Vec3 & v1) {
-  return Vec3(v1.x() * c,
-              v1.y() * c,
-              v1.z() * c);
+float dot(const Vec3 &v1, const Vec3 &v2) {
+    return v1.x() * v2.x() + v1.y() * v2.y() + v1.z() * v2.z();
 }
 
-bool operator==(const Vec3 &  v1, const Vec3 & v2) {
-  return v1.x() == v2.x() && v1.y() == v2.y() && v1.z() == v1.z();
+std::ostream &operator<<(std::ostream &out, const Vec3 &v1) {
+    out << v1.x() << ' ' << v1.y() << ' ' << v1.z();
+    return out;
 }
-
-
-float dot(const Vec3 & v1, const Vec3 & v2) {
-  return v1.x() * v2.x()
-       + v1.y() * v2.y()
-       + v1.z() * v2.z();
-}
-
-std::ostream &  operator<<(std::ostream & out, const Vec3 & v1) {
-  out << v1.x() << ' ' << v1.y() << ' ' << v1.z();
-  return out;
-}
- Vec3 cross(const Vec3 & v1, const Vec3 & v2) {
-  return Vec3( (v1.y() * v2.z() - v1.z() * v2.y()),
-              -(v1.x() * v2.z() - v1.z() * v2.x()),
-               (v1.x() * v2.y() - v1.y() * v2.x()));
+Vec3 cross(const Vec3 &v1, const Vec3 &v2) {
+    return Vec3((v1.y() * v2.z() - v1.z() * v2.y()),
+                -(v1.x() * v2.z() - v1.z() * v2.x()),
+                (v1.x() * v2.y() - v1.y() * v2.x()));
 }

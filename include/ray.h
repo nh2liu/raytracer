@@ -3,17 +3,17 @@
 #include "vec3.h"
 
 class Ray {
-private:
-  Vec3 p_vec;
-  Vec3 d_vec;
+  private:
+    Vec3 p_vec;
+    Vec3 d_vec;
 
-public:
-  Ray();
-  Ray(const Vec3 & a, const Vec3 & b);
+  public:
+    Ray();
+    Ray(const Vec3 &a, const Vec3 &b);
 
-  Vec3 position() const;
-  Vec3 direction() const;
-  Vec3 positionAt(float t) const;
+    Vec3 position() const;
+    Vec3 direction() const;
+    Vec3 positionAt(float t) const;
 };
 
 #endif
