@@ -11,6 +11,6 @@ Vec3 reflect(const Vec3 &v, const Vec3 &norm) {
 Vec3 Metal::scatter(const Ray &r, const shared_ptr<RenderObject> obj,
                     const float t) const {
     Vec3 poi = r.positionAt(t);
-    Vec3 newVec = reflect(r.direction().unit(), obj->normal(poi));
-    return newVec;
+    Vec3 new_vec = reflect(r.direction().unit(), obj->normal(poi));
+    return new_vec;
 }

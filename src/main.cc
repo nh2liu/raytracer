@@ -17,16 +17,16 @@ int main(int argc, char **argv) {
     int x, y, aalias;
 
     // file name
-    string fileName;
+    string file_name;
 
     // path to place completed renders
     string path = "renders/";
 
-    ifstream cameraConfig{"camera.cfg"};
-    cameraConfig >> fileName >> x >> y >> aalias;
+    ifstream camera_config{"camera.cfg"};
+    camera_config >> file_name >> x >> y >> aalias;
 
     Camera cam1("Front Camera", x, y, aalias);
-    cout << "Producing picture in file " << fileName << "." << endl;
+    cout << "Producing picture in file " << file_name << "." << endl;
     cout << "Dimensions " << x << " " << y << endl;
     cout << "Antialiasing level " << aalias << endl;
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
     while (getline(ifs, line)) {
         istringstream iss{line};
         string type;
-        string materialType;
+        string material_type;
         shared_ptr<RenderObject> obj;
         shared_ptr<Material> m;
         float r, g, b;
@@ -52,10 +52,10 @@ int main(int argc, char **argv) {
             obj = make_shared<Sphere>(Vec3(x, y, z), radius);
         }
 
-        iss >> materialType >> r >> g >> b;
-        if (materialType == "lambertian") {
+        iss >> material_type >> r >> g >> b;
+        if (material_type == "lambertian") {
             m = make_shared<Lambertian>(RGBUnit(r, g, b));
-        } else if (materialType == "metal") {
+        } else if (material_type == "metal") {
             m = make_shared<Metal>(RGBUnit(r, g, b));
         } else {
             throw 20;
@@ -64,13 +64,13 @@ int main(int argc, char **argv) {
         obj->setMaterial(m);
         objects.push_back(obj);
         materials.push_back(m);
-        cout << "Loaded a " << type << " with material " << materialType
+        cout << "Loaded a " << type << " with material " << material_type
              << endl;
     }
 
     // rendering landscape
     ofstream ofs;
-    ofs.open((path + fileName).c_str());
+    ofs.open((path + file_name).c_str());
 
     ofs << "P3" << endl << x << ' ' << y << endl << 255 << endl;
     ofs << cam1.render(objects, 1, 2);

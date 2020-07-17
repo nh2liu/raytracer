@@ -6,15 +6,15 @@
 // a spherical 3 object
 class Sphere : public RenderObject {
   private:
-    Vec3 center;
-    float radius;
+    Vec3 center_;
+    float radius_;
 
   public:
     Sphere();
     Sphere(const Vec3 center, const float radius);
 
     // inherits from render_object
-    float intersect(const Ray &r, const float tMin, const float tMax) const;
+    float intersect(const Ray &r, const float t_min, const float t_max) const;
     Vec3 normal(const Vec3 poi) const;
 };
 

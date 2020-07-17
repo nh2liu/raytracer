@@ -4,8 +4,8 @@
 
 class Ray {
   private:
-    Vec3 p_vec;
-    Vec3 d_vec;
+    Vec3 p_vec_;
+    Vec3 d_vec_;
 
   public:
     Ray();

@@ -10,15 +10,15 @@ class Material;
 // main object class to detect hits
 class RenderObject {
   private:
-    std::weak_ptr<Material> material;
+    std::weak_ptr<Material> material_;
 
   public:
     virtual ~RenderObject();
 
     // returns the intersection of the ray if hit
     // -1 otherwise
-    virtual float intersect(const Ray &r, const float tMin,
-                            const float tMax) const = 0;
+    virtual float intersect(const Ray &r, const float t_min,
+                            const float t_max) const = 0;
 
     // returns a normal vector to the hit (this vector is unit)
     // takes in the point of intersection between the ray and object

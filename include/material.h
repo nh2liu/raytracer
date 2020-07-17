@@ -7,7 +7,7 @@
 
 class Material {
   private:
-    RGBUnit attenuation;
+    RGBUnit attenuation_;
 
   public:
     Material(const RGBUnit &attenuation);

@@ -19,29 +19,29 @@ using namespace std;
 float randzeroone() { return rand() / (RAND_MAX + 1.); }
 
 Camera::Camera(string name, int x_res, int y_res, int aliasing_level,
-               int maxBounces)
-    : name{name}, x_res{x_res}, y_res{y_res},
-      lowerLeftCorner{Vec3(-2.0, -((2.0 * y_res) / x_res), -1.0)},
-      horizontal{Vec3(4.0, 0.0, 0.0)}, vertical{Vec3(0, (4.0 * y_res) / x_res,
-                                                     0.0)},
-      origin{Vec3(0.0, 0.0, 0.0)}, aliasing_its{aliasing_level * 20},
-      maxBounces{maxBounces} {}
+               int max_bounces)
+    : name_{name}, x_res_{x_res}, y_res_{y_res},
+      lower_left_corner_{Vec3(-2.0, -((2.0 * y_res) / x_res), -1.0)},
+      horizontal_{Vec3(4.0, 0.0, 0.0)}, vertical_{Vec3(0, (4.0 * y_res) / x_res,
+                                                       0.0)},
+      origin_{Vec3(0.0, 0.0, 0.0)}, aliasing_its_{aliasing_level * 20},
+      max_bounces_{max_bounces} {}
 
 RGBUnit Camera::color(const Ray &r, vector<shared_ptr<RenderObject>> &objects,
                       int bounces) {
-    float tMax = 1000;
-    float tMin = 0.001;
-    float lowestT = tMax;
-    shared_ptr<RenderObject> lowestObj;
+    float t_max = 1000;
+    float t_min = 0.001;
+    float t_lowest = t_max;
+    shared_ptr<RenderObject> lowest_obj;
     for (auto obj : objects) {
-        float t = obj->intersect(r, 0.0, tMax);
-        if (t > tMin && t < lowestT) {
-            lowestObj = obj;
-            lowestT = t;
+        float t = obj->intersect(r, 0.0, t_max);
+        if (t > t_min && t < t_lowest) {
+            lowest_obj = obj;
+            t_lowest = t;
         }
     }
-    // hit nothing or reaches maxBounces
-    if (!lowestObj || bounces == maxBounces) {
+    // hit nothing or reaches max_bounces
+    if (!lowest_obj || bounces == max_bounces_) {
         Vec3 d_unit = r.direction().unit();
         float t = 0.5 * (d_unit.y() + 1.0);
         return (1.0 - t) * RGBUnit(1.0, 1.0, 1.0) + t * RGBUnit(0.5, 0.7, 1.0);
@@ -49,10 +49,10 @@ RGBUnit Camera::color(const Ray &r, vector<shared_ptr<RenderObject>> &objects,
         // hit something
     } else {
         // diffuse material at the moment
-        Vec3 poi = r.positionAt(lowestT);
-        auto m = lowestObj->getMaterial().lock();
+        Vec3 poi = r.positionAt(t_lowest);
+        auto m = lowest_obj->getMaterial().lock();
         if (m) {
-            Vec3 newVec = m->scatter(r, lowestObj, lowestT);
+            Vec3 newVec = m->scatter(r, lowest_obj, t_lowest);
             RGBUnit attenuation = m->getAttenuation();
             return attenuation * color(Ray(poi, newVec), objects, bounces++);
         } else {
@@ -62,9 +62,9 @@ RGBUnit Camera::color(const Ray &r, vector<shared_ptr<RenderObject>> &objects,
 }
 
 RGBUnit gammaTransform(RGBUnit &p, int gamma) {
-    float gammaInv = 1. / gamma;
-    return RGBUnit(pow(p.r(), gammaInv), pow(p.g(), gammaInv),
-                   pow(p.b(), gammaInv));
+    float gamma_inv = 1. / gamma;
+    return RGBUnit(pow(p.r(), gamma_inv), pow(p.g(), gamma_inv),
+                   pow(p.b(), gamma_inv));
 }
 
 string Camera::render(vector<shared_ptr<RenderObject>> objects, int info_level,
@@ -72,27 +72,28 @@ string Camera::render(vector<shared_ptr<RenderObject>> objects, int info_level,
     ostringstream oss;
     // code convention is written from top to bottom
     if (info_level == 1)
-        cout << "Rendering " << name << endl;
+        cout << "Rendering " << name_ << endl;
     int progress_counter = 0;
 
-    for (int j = y_res - 1; j >= 0; j--) {
-        for (int i = 0; i < x_res; i++) {
+    for (int j = y_res_ - 1; j >= 0; j--) {
+        for (int i = 0; i < x_res_; i++) {
             RGBUnit pxl = RGBUnit();
             // adding antialiasing
-            for (int alias = 0; alias <= aliasing_its; ++alias) {
-                float u = float(i + randzeroone()) / float(x_res);
-                float d = float(j + randzeroone()) / float(y_res);
-                Ray r(origin, lowerLeftCorner + horizontal * u + vertical * d);
+            for (int alias = 0; alias <= aliasing_its_; ++alias) {
+                float u = float(i + randzeroone()) / float(x_res_);
+                float d = float(j + randzeroone()) / float(y_res_);
+                Ray r(origin_,
+                      lower_left_corner_ + horizontal_ * u + vertical_ * d);
                 pxl += color(r, objects);
             }
             progress_counter++;
             // printing progress counter
             if (info_level == 1 &&
-                progress_counter % ((x_res * y_res) / 10) == 0) {
-                cout << progress_counter * 100 / (x_res * y_res) << "% done."
+                progress_counter % ((x_res_ * y_res_) / 10) == 0) {
+                cout << progress_counter * 100 / (x_res_ * y_res_) << "% done."
                      << endl;
             }
-            pxl /= (aliasing_its + 1);
+            pxl /= (aliasing_its_ + 1);
             oss << gammaTransform(pxl, gamma);
         }
     }

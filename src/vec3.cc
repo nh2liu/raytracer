@@ -4,9 +4,9 @@ using namespace std;
 
 Vec3::Vec3() {}
 
-Vec3::Vec3(float x, float y, float z) : x0{x}, x1{y}, x2{z} {}
+Vec3::Vec3(float x, float y, float z) : x0_{x}, x1_{y}, x2_{z} {}
 
-float Vec3::mag() const { return sqrt(x0 * x0 + x1 * x1 + x2 * x2); }
+float Vec3::mag() const { return sqrt(x0_ * x0_ + x1_ * x1_ + x2_ * x2_); }
 
 Vec3 Vec3::unit() const { return (*this) / mag(); }
 
