@@ -1,5 +1,5 @@
-#ifndef _VEC_3_H
-#define _VEC_3_H
+#ifndef VEC3_H_
+#define VEC3_H_
 #include <iostream>
 /*
 Vec3 basic vector class for raytracing

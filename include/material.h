@@ -1,5 +1,5 @@
-#ifndef __MATERIAL_H__
-#define __MATERIAL_H__
+#ifndef MATERIAL_H_
+#define MATERIAL_H_
 #include <memory>
 
 #include "render_object.h"

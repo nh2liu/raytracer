@@ -1,5 +1,5 @@
-#ifndef _RenderObject_h_
-#define _RenderObject_h_
+#ifndef RENDEROBJECT_H_
+#define RENDEROBJECT_H_
 #include <memory>
 
 #include "ray.h"

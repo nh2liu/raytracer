@@ -1,5 +1,5 @@
-#ifndef __METAL_H__
-#define __METAL_H__
+#ifndef METAL_H_
+#define METAL_H_
 
 #include "material.h"
 

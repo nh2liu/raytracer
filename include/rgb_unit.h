@@ -1,5 +1,5 @@
-#ifndef _PIXEL_H
-#define _PIXEL_H
+#ifndef PIXEL_H_
+#define PIXEL_H_
 #include <iostream>
 
 class RGBUnit {

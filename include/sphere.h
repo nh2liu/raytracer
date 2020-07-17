@@ -1,5 +1,5 @@
-#ifndef __SPHERE_H_
-#define __SPHERE_H_
+#ifndef SPHERE_H_
+#define SPHERE_H_
 #include "render_object.h"
 #include "vec3.h"
 

@@ -1,3 +1,6 @@
+#ifndef TRIANGLE_H_
+#define TRIANGLE_H_
+
 #include "ray.h"
 #include "render_object.h"
 #include "vec3.h"
@@ -19,3 +22,5 @@ class Triangle : public RenderObject {
     float intersect(const Ray &r, const float t_min, const float t_max) const;
     Vec3 normal(const Vec3 poi) const;
 };
+
+#endif

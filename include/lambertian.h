@@ -1,5 +1,5 @@
-#ifndef __LAMBERTIAN_H__
-#define __LAMBERTIAN_H__
+#ifndef LAMBERTIAN_H_
+#define LAMBERTIAN_H_
 #include "material.h"
 
 class Lambertian : public Material {
