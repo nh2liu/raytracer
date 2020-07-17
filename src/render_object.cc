@@ -1,6 +1,9 @@
 #include "render_object.h"
+
+using namespace std;
+
 RenderObject::~RenderObject() {}
 
-Material *RenderObject::getMaterial() { return material; }
+weak_ptr<Material> RenderObject::getMaterial() { return material; }
 
-void RenderObject::setMaterial(Material *m) { material = m; }
+void RenderObject::setMaterial(weak_ptr<Material> m) { material = m; }

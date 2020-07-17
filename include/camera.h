@@ -1,10 +1,12 @@
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
+#include <iostream>
+#include <memory>
+#include <sstream>
+
 #include "ray.h"
 #include "rgb_unit.h"
 #include "vec3.h"
-#include <iostream>
-#include <sstream>
 
 class RenderObject;
 
@@ -19,14 +21,15 @@ class Camera {
     int aliasing_its;
     int maxBounces;
 
-    RGBUnit color(const Ray &r, std::vector<RenderObject *> &objects,
+    RGBUnit color(const Ray &r,
+                  std::vector<std::shared_ptr<RenderObject>> &objects,
                   int bounces = 0);
 
   public:
     Camera(std::string name, int x, int y, int aliasing_level = 0,
            int maxBounces = 30);
-    std::string render(std::vector<RenderObject *> objects, int info_level = 1,
-                       int gamma = 1);
+    std::string render(std::vector<std::shared_ptr<RenderObject>> objects,
+                       int info_level = 1, int gamma = 1);
 };
 
 #endif

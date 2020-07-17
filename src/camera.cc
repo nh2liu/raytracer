@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <memory>
 #include <random>
 #include <sstream>
 #include <vector>
@@ -26,13 +27,13 @@ Camera::Camera(string name, int x_res, int y_res, int aliasing_level,
       origin{Vec3(0.0, 0.0, 0.0)}, aliasing_its{aliasing_level * 20},
       maxBounces{maxBounces} {}
 
-RGBUnit Camera::color(const Ray &r, vector<RenderObject *> &objects,
+RGBUnit Camera::color(const Ray &r, vector<shared_ptr<RenderObject>> &objects,
                       int bounces) {
     float tMax = 1000;
     float tMin = 0.001;
     float lowestT = tMax;
-    RenderObject *lowestObj = nullptr;
-    for (RenderObject *obj : objects) {
+    shared_ptr<RenderObject> lowestObj;
+    for (auto obj : objects) {
         float t = obj->intersect(r, 0.0, tMax);
         if (t > tMin && t < lowestT) {
             lowestObj = obj;
@@ -40,7 +41,7 @@ RGBUnit Camera::color(const Ray &r, vector<RenderObject *> &objects,
         }
     }
     // hit nothing or reaches maxBounces
-    if (lowestObj == nullptr || bounces == maxBounces) {
+    if (!lowestObj || bounces == maxBounces) {
         Vec3 d_unit = r.direction().unit();
         float t = 0.5 * (d_unit.y() + 1.0);
         return (1.0 - t) * RGBUnit(1.0, 1.0, 1.0) + t * RGBUnit(0.5, 0.7, 1.0);
@@ -49,10 +50,14 @@ RGBUnit Camera::color(const Ray &r, vector<RenderObject *> &objects,
     } else {
         // diffuse material at the moment
         Vec3 poi = r.positionAt(lowestT);
-        Material *m = lowestObj->getMaterial();
-        Vec3 newVec = m->scatter(r, lowestObj, lowestT);
-        RGBUnit attenuation = m->getAttenuation();
-        return attenuation * color(Ray(poi, newVec), objects, bounces++);
+        auto m = lowestObj->getMaterial().lock();
+        if (m) {
+            Vec3 newVec = m->scatter(r, lowestObj, lowestT);
+            RGBUnit attenuation = m->getAttenuation();
+            return attenuation * color(Ray(poi, newVec), objects, bounces++);
+        } else {
+            throw std::runtime_error("No material set for obj.");
+        }
     }
 }
 
@@ -62,7 +67,7 @@ RGBUnit gammaTransform(RGBUnit &p, int gamma) {
                    pow(p.b(), gammaInv));
 }
 
-string Camera::render(vector<RenderObject *> objects, int info_level,
+string Camera::render(vector<shared_ptr<RenderObject>> objects, int info_level,
                       int gamma) {
     ostringstream oss;
     // code convention is written from top to bottom

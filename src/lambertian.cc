@@ -1,5 +1,7 @@
 #include "lambertian.h"
 
+using namespace std;
+
 Lambertian::Lambertian(const RGBUnit &attenuation) : Material(attenuation) {}
 
 float static randzeroone() { return rand() / (RAND_MAX + 1.); }
@@ -13,7 +15,7 @@ Vec3 randomUnitSphereVec() {
     return rng;
 }
 
-Vec3 Lambertian::scatter(const Ray &r, const RenderObject *obj,
+Vec3 Lambertian::scatter(const Ray &r, const shared_ptr<RenderObject> obj,
                          const float t) const {
     Vec3 poi = r.positionAt(t);
     Vec3 newVec = poi + obj->normal(poi) + randomUnitSphereVec();

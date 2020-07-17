@@ -1,5 +1,7 @@
 #ifndef _RenderObject_h_
 #define _RenderObject_h_
+#include <memory>
+
 #include "ray.h"
 #include "vec3.h"
 
@@ -8,7 +10,7 @@ class Material;
 // main object class to detect hits
 class RenderObject {
   private:
-    Material *material;
+    std::weak_ptr<Material> material;
 
   public:
     virtual ~RenderObject();
@@ -23,8 +25,8 @@ class RenderObject {
     virtual Vec3 normal(const Vec3 poi) const = 0;
 
     // getting and setting material
-    Material *getMaterial();
-    void setMaterial(Material *m);
+    std::weak_ptr<Material> getMaterial();
+    void setMaterial(std::weak_ptr<Material> m);
 };
 
 #endif

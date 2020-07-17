@@ -1,13 +1,15 @@
+#include <fstream>
+#include <iostream>
+#include <memory>
+#include <sstream>
+#include <vector>
+
 #include "camera.h"
 #include "lambertian.h"
 #include "metal.h"
 #include "rgb_unit.h"
 #include "sphere.h"
 #include "triangle.h"
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <vector>
 using namespace std;
 
 int main(int argc, char **argv) {
@@ -18,9 +20,9 @@ int main(int argc, char **argv) {
     string fileName;
 
     // path to place completed renders
-    string path = "../renders/";
+    string path = "renders/";
 
-    ifstream cameraConfig{"../camera.cfg"};
+    ifstream cameraConfig{"camera.cfg"};
     cameraConfig >> fileName >> x >> y >> aalias;
 
     Camera cam1("Front Camera", x, y, aalias);
@@ -29,32 +31,32 @@ int main(int argc, char **argv) {
     cout << "Antialiasing level " << aalias << endl;
 
     // creating test objects
-    vector<RenderObject *> objects;
-    vector<Material *> materials;
+    vector<shared_ptr<RenderObject>> objects;
+    vector<shared_ptr<Material>> materials;
 
     // reading in from landscape
-    ifstream ifs{"../landscape.cfg"};
+    ifstream ifs{"landscape.cfg"};
     string line;
 
     while (getline(ifs, line)) {
         istringstream iss{line};
         string type;
         string materialType;
-        RenderObject *obj;
-        Material *m;
+        shared_ptr<RenderObject> obj;
+        shared_ptr<Material> m;
         float r, g, b;
         iss >> type;
         if (type == "sphere") {
             float x, y, z, radius;
             iss >> x >> y >> z >> radius;
-            obj = new Sphere(Vec3(x, y, z), radius);
+            obj = make_shared<Sphere>(Vec3(x, y, z), radius);
         }
 
         iss >> materialType >> r >> g >> b;
         if (materialType == "lambertian") {
-            m = new Lambertian(RGBUnit(r, g, b));
+            m = make_shared<Lambertian>(RGBUnit(r, g, b));
         } else if (materialType == "metal") {
-            m = new Metal(RGBUnit(r, g, b));
+            m = make_shared<Metal>(RGBUnit(r, g, b));
         } else {
             throw 20;
         }
@@ -73,12 +75,4 @@ int main(int argc, char **argv) {
     ofs << "P3" << endl << x << ' ' << y << endl << 255 << endl;
     ofs << cam1.render(objects, 1, 2);
     ofs.close();
-
-    for (Material *m : materials) {
-        delete m;
-    }
-
-    for (RenderObject *obj : objects) {
-        delete obj;
-    }
 }
