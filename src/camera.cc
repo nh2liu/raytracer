@@ -15,7 +15,7 @@
 
 using namespace std;
 
-double randzeroone() {
+float randzeroone() {
   return rand() / (RAND_MAX + 1.);
 }
 
@@ -32,12 +32,12 @@ aliasing_its{aliasing_level * 20},
 maxBounces{maxBounces} {}
 
 Pixel Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
-  double tMax = 1000;
-  double tMin = 0.001;
-  double lowestT = tMax;
+  float tMax = 1000;
+  float tMin = 0.001;
+  float lowestT = tMax;
   gObject * lowestObj = nullptr;
   for (gObject * obj : objects) {
-    double t = obj->intersect(r, 0.0, tMax);
+    float t = obj->intersect(r, 0.0, tMax);
     if (t > tMin && t < lowestT) {
       lowestObj = obj;
       lowestT = t;
@@ -46,7 +46,7 @@ Pixel Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
   // hit nothing or reaches maxBounces
   if (lowestObj == nullptr || bounces == maxBounces) {
     Vec3 d_unit = r.direction().unit();
-    double t = 0.5 * (d_unit.y() + 1.0);
+    float t = 0.5 * (d_unit.y() + 1.0);
     return (1.0-t) * Pixel(1.0, 1.0, 1.0) + t * Pixel(0.5, 0.7, 1.0);
     // Sphere Norms
     // hit something
@@ -62,7 +62,7 @@ Pixel Camera::color(const Ray & r, vector <gObject * > & objects, int bounces) {
 
 
 Pixel gammaTransform(Pixel & p, int gamma) {
-  double gammaInv = 1. / gamma;
+  float gammaInv = 1. / gamma;
   return Pixel(pow(p.r(),  gammaInv),
                pow(p.g(),  gammaInv),
                pow(p.b(),  gammaInv));
@@ -79,8 +79,8 @@ string Camera::render(vector<gObject * > objects, int info_level, int gamma) {
       Pixel pxl = Pixel();
       // adding antialiasing
       for (int alias = 0; alias <= aliasing_its; ++alias) {
-        double u = double(i + randzeroone()) / double(x_res);
-        double d = double(j + randzeroone()) / double(y_res);
+        float u = float(i + randzeroone()) / float(x_res);
+        float d = float(j + randzeroone()) / float(y_res);
         Ray r(origin, lowerLeftCorner + horizontal * u + vertical * d);
         pxl += color(r, objects);
       }

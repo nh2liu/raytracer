@@ -7,13 +7,13 @@
 class Sphere: public gObject {
 private:
   Vec3 center;
-  double radius;
+  float radius;
 public:
   Sphere();
-  Sphere(const Vec3 center, const double radius);
+  Sphere(const Vec3 center, const float radius);
 
   // inherits from g_object
-  double intersect(const Ray & r, const double tMin, const double tMax) const;
+  float intersect(const Ray & r, const float tMin, const float tMax) const;
   Vec3 normal(const Vec3 poi) const;
 };
 

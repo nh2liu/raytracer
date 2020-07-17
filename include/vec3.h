@@ -7,16 +7,16 @@ Vec3 basic vector class for raytracing
 
 class Vec3 {
 private:
-  double x0, x1, x2;
+  float x0, x1, x2;
 public:
   Vec3();
-  Vec3(double x, double y, double z);
+  Vec3(float x, float y, float z);
 
-  inline double x() const {return x0;}
-  inline double y() const {return x1;}
-  inline double z() const {return x2;}
+  inline float x() const {return x0;}
+  inline float y() const {return x1;}
+  inline float z() const {return x2;}
 
-  double mag() const; // returns magnitude of vector
+  float mag() const; // returns magnitude of vector
   Vec3 unit() const; // returns unit vector
 
 };
@@ -27,13 +27,13 @@ Vec3 operator+(const Vec3 & v1, const Vec3 & v2);
 Vec3 operator-(const Vec3 & v1, const Vec3 & v2);
 Vec3 operator*(const Vec3 & v1, const Vec3 & v2);
 
-Vec3 operator/(const Vec3 & v1, double c);
-Vec3 operator*(const Vec3 & v1, double c);
-Vec3 operator*(double c, const Vec3 & v1);
+Vec3 operator/(const Vec3 & v1, float c);
+Vec3 operator*(const Vec3 & v1, float c);
+Vec3 operator*(float c, const Vec3 & v1);
 
 std::ostream & operator<<(std::ostream & out, const Vec3 & v1);
 
-double dot(const Vec3 & v1, const Vec3 & v2);
+float dot(const Vec3 & v1, const Vec3 & v2);
 Vec3 cross(const Vec3 & v1, const Vec3 & v2);
 
 #endif

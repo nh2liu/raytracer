@@ -11,6 +11,6 @@ Vec3 Ray::direction() const {
   return d_vec;
 }
 
-Vec3 Ray::positionAt(double t) const {
+Vec3 Ray::positionAt(float t) const {
   return p_vec + t * d_vec;
 }

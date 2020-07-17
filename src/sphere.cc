@@ -4,22 +4,22 @@
 
 Sphere::Sphere() : radius{0} {}
 
-Sphere::Sphere(const Vec3 center, const double radius) :
+Sphere::Sphere(const Vec3 center, const float radius) :
 center{center}, radius{radius} {}
 
-double Sphere::intersect(const Ray & r, const double tMin, const double tMax) const {
+float Sphere::intersect(const Ray & r, const float tMin, const float tMax) const {
   const Vec3 d = r.direction();
   const Vec3 p = r.position();
   const Vec3 p_c = p - center;
 
   // solving a*t^2 + b*t + c
-  const double a = dot(d, d);
-  const double b = 2.0 * dot(d, p_c);
-  const double c = dot(p_c, p_c) - radius * radius;
-  const double discriminant = b * b - 4.0 * a * c;
+  const float a = dot(d, d);
+  const float b = 2.0 * dot(d, p_c);
+  const float c = dot(p_c, p_c) - radius * radius;
+  const float discriminant = b * b - 4.0 * a * c;
 
   // smallest t
-  double t = (- b - sqrt(discriminant)) / (2.0 * a);
+  float t = (- b - sqrt(discriminant)) / (2.0 * a);
   
   if (discriminant < 0 || t < tMin || t > tMax) {
     return -1;

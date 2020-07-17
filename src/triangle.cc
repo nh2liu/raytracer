@@ -9,11 +9,11 @@ Triangle::Triangle(const Vec3 p1, const Vec3 p2, const Vec3 p3) {
 	D = dot(norm, p1);
 }
 
-bool between01(double k) {
+bool between01(float k) {
 	return k >= 0 && k <= 1;
 }
 
-double Triangle::intersect(const Ray & r, const double tMin, const double tMax) const {
+float Triangle::intersect(const Ray & r, const float tMin, const float tMax) const {
   	// norm of the equation, Ax + By + Cz = D
   	// dot(norm, poi) = D
   	// dot(norm, p + td) = D
@@ -21,14 +21,14 @@ double Triangle::intersect(const Ray & r, const double tMin, const double tMax) 
   	// t = (D - dot(norm, p)) / dot(norm, d)
   	Vec3 p = r.position();
 	Vec3 d = r.direction();
-	double t = (D - dot(norm, p)) / dot(norm, d);
+	float t = (D - dot(norm, p)) / dot(norm, d);
 
 	if (t > tMin && t < tMax) {
 		Vec3 poi = r.positionAt(t);
-		double area = norm.mag() / 2;
-		double alpha = (cross(poi - points[1], poi - points[2]).mag()) / (2 * area);
-		double beta = (cross(poi - points[2], poi - points[0]).mag()) / (2 * area);
-		double gamma = 1 - alpha - beta;
+		float area = norm.mag() / 2;
+		float alpha = (cross(poi - points[1], poi - points[2]).mag()) / (2 * area);
+		float beta = (cross(poi - points[2], poi - points[0]).mag()) / (2 * area);
+		float gamma = 1 - alpha - beta;
 
 		if (between01(alpha) && between01(beta) && between01(gamma)) {
 			return t;

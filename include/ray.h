@@ -13,7 +13,7 @@ public:
 
   Vec3 position() const;
   Vec3 direction() const;
-  Vec3 positionAt(double t) const;
+  Vec3 positionAt(float t) const;
 };
 
 #endif

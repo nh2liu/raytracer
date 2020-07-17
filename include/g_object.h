@@ -14,9 +14,9 @@ public:
 
   // returns the intersection of the ray if hit
   // -1 otherwise
-  virtual double intersect(const Ray & r,
-                         const double tMin,
-                         const double tMax) const = 0;
+  virtual float intersect(const Ray & r,
+                         const float tMin,
+                         const float tMax) const = 0;
 
   // returns a normal vector to the hit (this vector is unit)
   // takes in the point of intersection between the ray and object

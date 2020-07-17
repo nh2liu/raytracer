@@ -5,7 +5,7 @@
 class Lambertian : public Material {
 public:
 	Lambertian(const Pixel & attenuation);
-	Vec3 scatter(const Ray & r, const gObject * obj, const double t) const;
+	Vec3 scatter(const Ray & r, const gObject * obj, const float t) const;
 };
 
 #endif

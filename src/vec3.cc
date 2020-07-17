@@ -4,9 +4,9 @@ using namespace std;
 
 Vec3::Vec3(){}
 
-Vec3::Vec3(double x, double y, double z) : x0{x}, x1{y}, x2{z} {}
+Vec3::Vec3(float x, float y, float z) : x0{x}, x1{y}, x2{z} {}
 
-double Vec3::mag() const {
+float Vec3::mag() const {
   return sqrt(x0 * x0 + x1 * x1 + x2 * x2);
 }
 
@@ -31,19 +31,19 @@ Vec3 operator-(const Vec3 & v1, const Vec3 & v2) {
               v1.z() * v2.z());
 }
 
-Vec3 operator/(const Vec3 & v1, double c) {
+Vec3 operator/(const Vec3 & v1, float c) {
   return Vec3(v1.x() / c,
               v1.y() / c,
               v1.z() / c);
 }
 
-Vec3 operator*(const Vec3 & v1, double c) {
+Vec3 operator*(const Vec3 & v1, float c) {
   return Vec3(v1.x() * c,
               v1.y() * c,
               v1.z() * c);
 }
 
-Vec3 operator*(double c, const Vec3 & v1) {
+Vec3 operator*(float c, const Vec3 & v1) {
   return Vec3(v1.x() * c,
               v1.y() * c,
               v1.z() * c);
@@ -54,7 +54,7 @@ bool operator==(const Vec3 &  v1, const Vec3 & v2) {
 }
 
 
-double dot(const Vec3 & v1, const Vec3 & v2) {
+float dot(const Vec3 & v1, const Vec3 & v2) {
   return v1.x() * v2.x()
        + v1.y() * v2.y()
        + v1.z() * v2.z();

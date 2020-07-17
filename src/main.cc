@@ -41,10 +41,10 @@ int main(int argc, char ** argv) {
     string type; string materialType;
     gObject * obj;
     Material * m;
-    double r,g,b;
+    float r,g,b;
     iss >> type;
     if (type == "sphere") {
-      double x, y, z, radius;
+      float x, y, z, radius;
       iss >> x >> y >> z >> radius;
       obj = new Sphere(Vec3(x,y,z), radius);
     }

@@ -2,7 +2,7 @@
 
 Lambertian::Lambertian(const Pixel & attenuation) : Material(attenuation) {}
 
-double static randzeroone() {
+float static randzeroone() {
   return rand() / (RAND_MAX + 1.);
 }
 
@@ -14,7 +14,7 @@ Vec3 randomUnitSphereVec() {
   return rng;
 }
 
- Vec3 Lambertian::scatter(const Ray & r, const gObject * obj, const double t) const {
+ Vec3 Lambertian::scatter(const Ray & r, const gObject * obj, const float t) const {
 	Vec3 poi = r.positionAt(t);
     Vec3 newVec = poi + obj->normal(poi) + randomUnitSphereVec();
     return newVec;
