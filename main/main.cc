@@ -1,3 +1,4 @@
+#include <boost/program_options.hpp>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -10,19 +11,39 @@
 #include "rgb_unit.h"
 #include "sphere.h"
 #include "triangle.h"
+
 using namespace std;
+namespace po = boost::program_options;
 
 int main(int argc, char **argv) {
+    string render_path;
+    string camera_path;
+    string scene_path;
+    try {    
+        po::options_description desc("Options");
+        desc.add_options()
+        ("render_path,r", po::value(&render_path), "Name of output ppm file.")
+        ("camera_config,c", po::value(&camera_path), "Path to camera.cfg")
+        ("scene_config,s", po::value(&scene_path), "Path to scene.cfg");
+        po::variables_map vm;
+        po::store(po::parse_command_line(argc, argv, desc), vm);
+        po::notify(vm);
+    } catch (exception &e) {
+        cerr << e.what() << '\n';
+        return 1;
+    }
+
     // dimensions of the picture, antialiasing level
     int x, y, aalias;
 
     // file name
     string file_name;
 
-    // path to place completed renders
-    string path = "renders/";
-
-    ifstream camera_config{"camera.cfg"};
+    ifstream camera_config{camera_path};
+    if (!camera_config.good()) {
+        cerr << "Invalid camera configuration path." << '\n';
+        return 2;
+    }
     camera_config >> file_name >> x >> y >> aalias;
 
     Camera cam1("Front Camera", x, y, aalias);
@@ -35,7 +56,12 @@ int main(int argc, char **argv) {
     vector<shared_ptr<Material>> materials;
 
     // reading in from landscape
-    ifstream ifs{"landscape.cfg"};
+    ifstream ifs{scene_path};
+    if (!ifs.good()) {
+        cerr << "Invalid scene configuration path." << '\n';
+        return 3;
+    }
+
     string line;
 
     while (getline(ifs, line)) {
@@ -70,7 +96,7 @@ int main(int argc, char **argv) {
 
     // rendering landscape
     ofstream ofs;
-    ofs.open((path + file_name).c_str());
+    ofs.open((render_path + file_name).c_str());
 
     ofs << "P3" << endl << x << ' ' << y << endl << 255 << endl;
     ofs << cam1.render(objects, 1, 2);
