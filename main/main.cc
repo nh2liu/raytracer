@@ -18,7 +18,7 @@
 using namespace std;
 namespace po = boost::program_options;
 
-int main(int argc, char **argv) {
+int32_t main(int32_t argc, char **argv) {
     string render_path;
     string camera_path;
     string scene_path;
@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
     }
 
     // dimensions of the picture, antialiasing level
-    int x, y, aalias;
+    uint32_t x, y, aalias;
 
     // file name
     string file_name;
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
         } else if (type == "triangle") {
             Vec3 corners[3];
             float x, y, z;
-            for (int i = 0; i < 3; i++) {
+            for (uint32_t i = 0; i < 3; i++) {
                 iss >> x >> y >> z;
                 cout << x << " " << y << " " << z << endl;
                 corners[i] = Vec3(x, y, z);

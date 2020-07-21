@@ -18,8 +18,8 @@ using namespace std;
 
 float randzeroone() { return rand() / (RAND_MAX + 1.); }
 
-Camera::Camera(string name, int x_res, int y_res, int aliasing_level,
-               int max_bounces)
+Camera::Camera(string name, uint32_t x_res, uint32_t y_res, uint32_t aliasing_level,
+               uint32_t max_bounces)
     : name_{name}, x_res_{x_res}, y_res_{y_res},
       lower_left_corner_{Vec3(-2.0, -((2.0 * y_res) / x_res), -1.0)},
       horizontal_{Vec3(4.0, 0.0, 0.0)}, vertical_{Vec3(0, (4.0 * y_res) / x_res,
@@ -28,7 +28,7 @@ Camera::Camera(string name, int x_res, int y_res, int aliasing_level,
       max_bounces_{max_bounces} {}
 
 RGBUnit Camera::color(const Ray &r, vector<shared_ptr<RenderObject>> &objects,
-                      int bounces) {
+                      uint32_t bounces) {
     float t_max = 1000;
     float t_min = 0.001;
     float t_lowest = t_max;
@@ -61,26 +61,26 @@ RGBUnit Camera::color(const Ray &r, vector<shared_ptr<RenderObject>> &objects,
     }
 }
 
-RGBUnit gammaTransform(RGBUnit &p, int gamma) {
+RGBUnit gammaTransform(RGBUnit &p, uint32_t gamma) {
     float gamma_inv = 1. / gamma;
     return RGBUnit(pow(p.r(), gamma_inv), pow(p.g(), gamma_inv),
                    pow(p.b(), gamma_inv));
 }
 
-ImageBuffer Camera::render(const SceneManager &scene_manager, int info_level,
-                           int gamma) {
+ImageBuffer Camera::render(const SceneManager &scene_manager, uint32_t info_level,
+                           uint32_t gamma) {
     ImageBuffer buf(x_res_, y_res_);
 
     // code convention is written from top to bottom
     if (info_level == 1)
         cout << "Rendering " << name_ << endl;
-    int progress_counter = 0;
+    uint32_t progress_counter = 0;
 
-    for (int j = y_res_ - 1; j >= 0; j--) {
-        for (int i = 0; i < x_res_; i++) {
+    for (uint32_t j = y_res_ - 1; j >= 0; j--) {
+        for (uint32_t i = 0; i < x_res_; i++) {
             RGBUnit pxl = RGBUnit();
             // adding antialiasing
-            for (int alias = 0; alias <= aliasing_its_; ++alias) {
+            for (uint32_t alias = 0; alias <= aliasing_its_; ++alias) {
                 float u = float(i + randzeroone()) / float(x_res_);
                 float d = float(j + randzeroone()) / float(y_res_);
                 Ray r(origin_,

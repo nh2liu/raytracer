@@ -14,23 +14,23 @@ class RenderObject;
 class Camera {
   private:
     std::string name_;
-    int x_res_, y_res_;
+    uint32_t x_res_, y_res_;
     Vec3 lower_left_corner_;
     Vec3 horizontal_;
     Vec3 vertical_;
     Vec3 origin_;
-    int aliasing_its_;
-    int max_bounces_;
+    uint32_t aliasing_its_;
+    uint32_t max_bounces_;
 
     RGBUnit color(const Ray &r,
                   std::vector<std::shared_ptr<RenderObject>> &objects,
-                  int bounces = 0);
+                  uint32_t bounces = 0);
 
   public:
-    Camera(std::string name, int x, int y, int aliasing_level = 0,
-           int max_bounces = 30);
-    ImageBuffer render(const SceneManager &scene_manager, int info_level = 1,
-                       int gamma = 1);
+    Camera(std::string name, uint32_t x, uint32_t y, uint32_t aliasing_level = 0,
+           uint32_t max_bounces = 30);
+    ImageBuffer render(const SceneManager &scene_manager, uint32_t info_level = 1,
+                       uint32_t gamma = 1);
 };
 
 #endif
