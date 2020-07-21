@@ -77,6 +77,16 @@ int main(int argc, char **argv) {
             float x, y, z, radius;
             iss >> x >> y >> z >> radius;
             obj = scene_manager.createSphere(Vec3(x, y, z), radius);
+        } else if (type == "triangle") {
+            Vec3 corners[3];
+            float x, y, z;
+            for (int i = 0; i < 3; i++) {
+                iss >> x >> y >> z;
+                corners[i] = Vec3(x, y, z);
+            }
+            obj = scene_manager.createTriangle(
+                corners[0], corners[1], corners[2]
+            );
         }
 
         iss >> material_type >> r >> g >> b;
