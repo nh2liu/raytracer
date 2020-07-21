@@ -107,9 +107,6 @@ int32_t main(int32_t argc, char **argv) {
     }
 
     // rendering landscape
-    ofstream ofs;
-    ofs.open((render_path + file_name).c_str());
     ImageBuffer img_buf = cam1.render(scene_manager, 1, 2);
-    ofs << img_buf.ppm();
-    ofs.close();
+    img_buf.ppm(render_path + file_name);
 }
