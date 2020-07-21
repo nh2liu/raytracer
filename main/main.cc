@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "camera.h"
+#include "image_buffer.h"
 #include "materials/lambertian.h"
 #include "materials/metal.h"
 #include "objects/sphere.h"
@@ -108,8 +109,7 @@ int main(int argc, char **argv) {
     // rendering landscape
     ofstream ofs;
     ofs.open((render_path + file_name).c_str());
-
-    ofs << "P3" << endl << x << ' ' << y << endl << 255 << endl;
-    ofs << cam1.render(scene_manager, 1, 2);
+    ImageBuffer img_buf = cam1.render(scene_manager, 1, 2);
+    ofs << img_buf.ppm();
     ofs.close();
 }

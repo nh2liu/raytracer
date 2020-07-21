@@ -4,7 +4,6 @@
 #include <iostream>
 #include <memory>
 #include <random>
-#include <sstream>
 #include <vector>
 
 #include "camera.h"
@@ -68,9 +67,10 @@ RGBUnit gammaTransform(RGBUnit &p, int gamma) {
                    pow(p.b(), gamma_inv));
 }
 
-string Camera::render(const SceneManager &scene_manager, int info_level,
-                      int gamma) {
-    ostringstream oss;
+ImageBuffer Camera::render(const SceneManager &scene_manager, int info_level,
+                           int gamma) {
+    ImageBuffer buf(x_res_, y_res_);
+
     // code convention is written from top to bottom
     if (info_level == 1)
         cout << "Rendering " << name_ << endl;
@@ -96,8 +96,8 @@ string Camera::render(const SceneManager &scene_manager, int info_level,
                      << endl;
             }
             pxl /= (aliasing_its_ + 1);
-            oss << gammaTransform(pxl, gamma);
+            buf.setUnit(gammaTransform(pxl, gamma), i, j);
         }
     }
-    return oss.str();
+    return buf;
 }

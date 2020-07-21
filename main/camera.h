@@ -2,8 +2,8 @@
 #define CAMERA_H_
 #include <iostream>
 #include <memory>
-#include <sstream>
 
+#include "image_buffer.h"
 #include "primitives/ray.h"
 #include "primitives/rgb_unit.h"
 #include "primitives/vec3.h"
@@ -29,7 +29,7 @@ class Camera {
   public:
     Camera(std::string name, int x, int y, int aliasing_level = 0,
            int max_bounces = 30);
-    std::string render(const SceneManager &scene_manager, int info_level = 1,
+    ImageBuffer render(const SceneManager &scene_manager, int info_level = 1,
                        int gamma = 1);
 };
 
