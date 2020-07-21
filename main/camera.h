@@ -8,6 +8,7 @@
 #include "rgb_unit.h"
 #include "vec3.h"
 
+class SceneManager;
 class RenderObject;
 
 class Camera {
@@ -28,8 +29,8 @@ class Camera {
   public:
     Camera(std::string name, int x, int y, int aliasing_level = 0,
            int max_bounces = 30);
-    std::string render(std::vector<std::shared_ptr<RenderObject>> objects,
-                       int info_level = 1, int gamma = 1);
+    std::string render(const SceneManager &scene_manager, int info_level = 1,
+                       int gamma = 1);
 };
 
 #endif

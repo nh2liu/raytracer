@@ -9,6 +9,7 @@
 #include "lambertian.h"
 #include "metal.h"
 #include "rgb_unit.h"
+#include "scene_manager.h"
 #include "sphere.h"
 #include "triangle.h"
 
@@ -52,7 +53,6 @@ int main(int argc, char **argv) {
     cout << "Antialiasing level " << aalias << endl;
 
     // creating test objects
-    vector<shared_ptr<RenderObject>> objects;
     vector<shared_ptr<Material>> materials;
 
     // reading in from landscape
@@ -63,7 +63,8 @@ int main(int argc, char **argv) {
     }
 
     string line;
-
+    SceneManager scene_manager;
+    
     while (getline(ifs, line)) {
         istringstream iss{line};
         string type;
@@ -75,7 +76,7 @@ int main(int argc, char **argv) {
         if (type == "sphere") {
             float x, y, z, radius;
             iss >> x >> y >> z >> radius;
-            obj = make_shared<Sphere>(Vec3(x, y, z), radius);
+            obj = scene_manager.createSphere(Vec3(x, y, z), radius);
         }
 
         iss >> material_type >> r >> g >> b;
@@ -86,9 +87,7 @@ int main(int argc, char **argv) {
         } else {
             throw 20;
         }
-
         obj->setMaterial(m);
-        objects.push_back(obj);
         materials.push_back(m);
         cout << "Loaded a " << type << " with material " << material_type
              << endl;
@@ -99,6 +98,6 @@ int main(int argc, char **argv) {
     ofs.open((render_path + file_name).c_str());
 
     ofs << "P3" << endl << x << ' ' << y << endl << 255 << endl;
-    ofs << cam1.render(objects, 1, 2);
+    ofs << cam1.render(scene_manager, 1, 2);
     ofs.close();
 }

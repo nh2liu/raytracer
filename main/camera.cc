@@ -12,6 +12,7 @@
 #include "ray.h"
 #include "render_object.h"
 #include "rgb_unit.h"
+#include "scene_manager.h"
 #include "vec3.h"
 
 using namespace std;
@@ -67,7 +68,7 @@ RGBUnit gammaTransform(RGBUnit &p, int gamma) {
                    pow(p.b(), gamma_inv));
 }
 
-string Camera::render(vector<shared_ptr<RenderObject>> objects, int info_level,
+string Camera::render(const SceneManager &scene_manager, int info_level,
                       int gamma) {
     ostringstream oss;
     // code convention is written from top to bottom
@@ -84,6 +85,7 @@ string Camera::render(vector<shared_ptr<RenderObject>> objects, int info_level,
                 float d = float(j + randzeroone()) / float(y_res_);
                 Ray r(origin_,
                       lower_left_corner_ + horizontal_ * u + vertical_ * d);
+                auto objects = scene_manager.getObjects(r);
                 pxl += color(r, objects);
             }
             progress_counter++;
