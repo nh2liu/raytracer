@@ -4,9 +4,9 @@
 #include <memory>
 #include <sstream>
 
-#include "ray.h"
-#include "rgb_unit.h"
-#include "vec3.h"
+#include "primitives/ray.h"
+#include "primitives/rgb_unit.h"
+#include "primitives/vec3.h"
 
 class SceneManager;
 class RenderObject;

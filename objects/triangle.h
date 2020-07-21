@@ -1,9 +1,10 @@
 #ifndef TRIANGLE_H_
 #define TRIANGLE_H_
 
-#include "ray.h"
+#include "primitives/ray.h"
+#include "primitives/vec3.h"
 #include "render_object.h"
-#include "vec3.h"
+
 
 class Triangle : public RenderObject {
   private:

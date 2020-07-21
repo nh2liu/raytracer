@@ -4,11 +4,11 @@
 #include <memory>
 #include <vector>
 
-#include "material.h"
-#include "ray.h"
-#include "render_object.h"
-#include "sphere.h"
-#include "triangle.h"
+#include "materials/material.h"
+#include "objects/render_object.h"
+#include "objects/sphere.h"
+#include "objects/triangle.h"
+#include "primitives/ray.h"
 
 class SceneManager {
   private:

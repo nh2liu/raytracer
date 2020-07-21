@@ -1,7 +1,7 @@
 #ifndef SPHERE_H_
 #define SPHERE_H_
 #include "render_object.h"
-#include "vec3.h"
+#include "primitives/vec3.h"
 
 // a spherical 3 object
 class Sphere : public RenderObject {

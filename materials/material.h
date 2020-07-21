@@ -2,8 +2,8 @@
 #define MATERIAL_H_
 #include <memory>
 
-#include "render_object.h"
-#include "rgb_unit.h"
+#include "objects/render_object.h"
+#include "primitives/rgb_unit.h"
 
 class Material {
   private:

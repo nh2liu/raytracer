@@ -2,8 +2,8 @@
 #define RENDEROBJECT_H_
 #include <memory>
 
-#include "ray.h"
-#include "vec3.h"
+#include "primitives/ray.h"
+#include "primitives/vec3.h"
 
 class Material;
 

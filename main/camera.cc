@@ -8,12 +8,12 @@
 #include <vector>
 
 #include "camera.h"
-#include "material.h"
-#include "ray.h"
-#include "render_object.h"
-#include "rgb_unit.h"
+#include "materials/material.h"
+#include "objects/render_object.h"
+#include "primitives/ray.h"
+#include "primitives/rgb_unit.h"
+#include "primitives/vec3.h"
 #include "scene_manager.h"
-#include "vec3.h"
 
 using namespace std;
 
@@ -35,7 +35,7 @@ RGBUnit Camera::color(const Ray &r, vector<shared_ptr<RenderObject>> &objects,
     float t_lowest = t_max;
     shared_ptr<RenderObject> lowest_obj;
     for (auto obj : objects) {
-        float t = obj->intersect(r, 0.0, t_max);
+        float t = obj->intersect(r, t_min, t_max);
         if (t > t_min && t < t_lowest) {
             lowest_obj = obj;
             t_lowest = t;

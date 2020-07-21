@@ -6,12 +6,13 @@
 #include <vector>
 
 #include "camera.h"
-#include "lambertian.h"
-#include "metal.h"
-#include "rgb_unit.h"
+#include "materials/lambertian.h"
+#include "materials/metal.h"
+#include "objects/sphere.h"
+#include "objects/triangle.h"
+#include "primitives/rgb_unit.h"
 #include "scene_manager.h"
-#include "sphere.h"
-#include "triangle.h"
+
 
 using namespace std;
 namespace po = boost::program_options;
@@ -82,6 +83,7 @@ int main(int argc, char **argv) {
             float x, y, z;
             for (int i = 0; i < 3; i++) {
                 iss >> x >> y >> z;
+                cout << x << " " << y << " " << z << endl;
                 corners[i] = Vec3(x, y, z);
             }
             obj = scene_manager.createTriangle(
