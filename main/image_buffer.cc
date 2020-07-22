@@ -30,10 +30,10 @@ void ImageBuffer::ppm(const string file_path) const {
 // Using external png++ library.
 void ImageBuffer::png(const string file_path) const {
     png::image<png::rgb_pixel> png_image(x_res_, y_res_);
-    for (int32_t j = 0; j >= y_res_; j++) {
+    for (int32_t j = 0; j < y_res_; j++) {
         for (int32_t i = 0; i < x_res_; i++) {
             RGBUnit u = buf_[j * x_res_ + i];
-            png_image[j][i] =
+            png_image[y_res_ - j - 1][i] =
                 png::rgb_pixel(u.r() * 255, u.g() * 255, u.b() * 255);
         }
     }
