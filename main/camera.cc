@@ -76,8 +76,8 @@ ImageBuffer Camera::render(const SceneManager &scene_manager, uint32_t info_leve
         cout << "Rendering " << name_ << endl;
     uint32_t progress_counter = 0;
 
-    for (uint32_t j = y_res_ - 1; j >= 0; j--) {
-        for (uint32_t i = 0; i < x_res_; i++) {
+    for (int32_t j = y_res_ - 1; j >= 0; j--) {
+        for (int32_t i = 0; i < x_res_; i++) {
             RGBUnit pxl = RGBUnit();
             // adding antialiasing
             for (uint32_t alias = 0; alias <= aliasing_its_; ++alias) {

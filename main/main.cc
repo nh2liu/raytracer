@@ -40,6 +40,7 @@ int32_t main(int32_t argc, char **argv) {
     uint32_t x, y, aalias;
 
     // file name
+    string extension;
     string file_name;
 
     ifstream camera_config{camera_path};
@@ -47,10 +48,14 @@ int32_t main(int32_t argc, char **argv) {
         cerr << "Invalid camera configuration path." << '\n';
         return 2;
     }
-    camera_config >> file_name >> x >> y >> aalias;
 
+    camera_config >> extension >> file_name >> x >> y >> aalias;
+    if (!(extension == "ppm" || extension == "png")) {
+        cerr << "Extension not supported." << '\n';
+        return 3;
+    }
     Camera cam1("Front Camera", x, y, aalias);
-    cout << "Producing picture in file " << file_name << "." << endl;
+    cout << "Producing picture in file " << file_name << "." << extension << endl;
     cout << "Dimensions " << x << " " << y << endl;
     cout << "Antialiasing level " << aalias << endl;
 
@@ -61,7 +66,7 @@ int32_t main(int32_t argc, char **argv) {
     ifstream ifs{scene_path};
     if (!ifs.good()) {
         cerr << "Invalid scene configuration path." << '\n';
-        return 3;
+        return 4;
     }
 
     string line;
@@ -108,5 +113,11 @@ int32_t main(int32_t argc, char **argv) {
 
     // rendering landscape
     ImageBuffer img_buf = cam1.render(scene_manager, 1, 2);
-    img_buf.ppm(render_path + file_name);
+    
+    auto file_path = render_path + file_name + "." + extension;
+    if (extension == "ppm") {
+        img_buf.ppm(file_path);
+    } else {
+        img_buf.png(file_path);
+    }
 }

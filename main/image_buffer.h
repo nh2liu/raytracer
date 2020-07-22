@@ -17,6 +17,7 @@ class ImageBuffer {
     void setUnit(const RGBUnit &unit, const uint32_t x, const uint32_t y);
 
     void ppm(const std::string file_path) const;
+    void png(const std::string file_path) const;
 };
 
 #endif
