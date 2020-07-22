@@ -1,6 +1,8 @@
 #include <boost/program_options.hpp>
+#include <chrono>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include <memory>
 #include <sstream>
 #include <vector>
@@ -111,9 +113,17 @@ int32_t main(int32_t argc, char **argv) {
              << endl;
     }
 
+    // Benchmarking.
+    auto start = chrono::steady_clock::now();
+
     // rendering landscape
     ImageBuffer img_buf = cam1.render(scene_manager, 1, 2);
-    
+    auto end = chrono::steady_clock::now();
+    auto elapsed = chrono::duration_cast<chrono::milliseconds>(end - start);
+    cout  << setprecision(2) << fixed;
+    cout <<"Took " << (1. * elapsed.count()) / 1000 << " seconds.\n";
+
+    // Saving to file.
     auto file_path = render_path + file_name + "." + extension;
     if (extension == "ppm") {
         img_buf.ppm(file_path);
