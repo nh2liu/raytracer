@@ -107,7 +107,7 @@ int32_t main(int32_t argc, char **argv) {
         } else {
             throw 20;
         }
-        obj->setMaterial(m);
+        obj->setMaterial(m.get());
         materials.push_back(m);
         cout << "Loaded a " << type << " with material " << material_type
              << endl;

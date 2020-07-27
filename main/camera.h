@@ -22,15 +22,14 @@ class Camera {
     uint32_t aliasing_its_;
     uint32_t max_bounces_;
 
-    RGBUnit color(const Ray &r,
-                  std::vector<std::shared_ptr<RenderObject>> &objects,
-                  uint32_t bounces = 0);
+    RGBUnit color(const Ray &r, const std::vector<RenderObject *> &objects,
+                  uint32_t bounces = 0) const;
 
   public:
-    Camera(std::string name, uint32_t x, uint32_t y, uint32_t aliasing_level = 0,
-           uint32_t max_bounces = 30);
-    ImageBuffer render(const SceneManager &scene_manager, uint32_t info_level = 1,
-                       uint32_t gamma = 1);
+    Camera(std::string name, uint32_t x, uint32_t y,
+           uint32_t aliasing_level = 0, uint32_t max_bounces = 5);
+    ImageBuffer render(const SceneManager &scene_manager,
+                       uint32_t info_level = 1, uint32_t gamma = 1) const;
 };
 
 #endif

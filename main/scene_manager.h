@@ -19,7 +19,7 @@ class SceneManager {
     std::shared_ptr<Triangle> createTriangle(const Vec3 &p1, const Vec3 &p2,
                                              const Vec3 &p3);
 
-    std::vector<std::shared_ptr<RenderObject>> getObjects(const Ray &ray) const;
+    std::vector<RenderObject *> getObjects(const Ray &ray) const;
 };
 
 #endif

@@ -11,7 +11,7 @@ class Material {
 
   public:
     Material(const RGBUnit &attenuation);
-    virtual Vec3 scatter(const Ray &r, const std::shared_ptr<RenderObject> obj,
+    virtual Vec3 scatter(const Ray &r, const RenderObject *obj,
                          const float t) const = 0;
     RGBUnit getAttenuation();
 };

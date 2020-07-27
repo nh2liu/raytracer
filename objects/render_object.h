@@ -10,7 +10,8 @@ class Material;
 // main object class to detect hits
 class RenderObject {
   private:
-    std::weak_ptr<Material> material_;
+    // Non-owned material obj.
+    Material *material_;
 
   public:
     virtual ~RenderObject();
@@ -25,8 +26,8 @@ class RenderObject {
     virtual Vec3 normal(const Vec3 poi) const = 0;
 
     // getting and setting material
-    std::weak_ptr<Material> getMaterial();
-    void setMaterial(std::weak_ptr<Material> m);
+    Material *getMaterial();
+    void setMaterial(Material *m);
 };
 
 #endif

@@ -4,6 +4,6 @@ using namespace std;
 
 RenderObject::~RenderObject() {}
 
-weak_ptr<Material> RenderObject::getMaterial() { return material_; }
+Material *RenderObject::getMaterial() { return material_; }
 
-void RenderObject::setMaterial(weak_ptr<Material> m) { material_ = m; }
+void RenderObject::setMaterial(Material *m) { material_ = m; }
