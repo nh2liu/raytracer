@@ -4,8 +4,7 @@ using namespace std;
 
 ostream &operator<<(ostream &out, const RGBUnit &pxl) {
     float c = 255.99;
-    out << uint32_t(pxl.r_ * c) << ' ' << uint32_t(pxl.g_ * c) << ' ' << uint32_t(pxl.b_ * c)
-        << endl;
+    out << uint32_t(pxl.r_ * c) << ' ' << uint32_t(pxl.g_ * c) << ' ' << uint32_t(pxl.b_ * c);
     return out;
 }
 
