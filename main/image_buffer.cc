@@ -21,7 +21,7 @@ void ImageBuffer::ppm(const string file_path) const {
     ofs << "P3" << endl << x_res_ << ' ' << y_res_ << endl << 255 << endl;
     for (int32_t j = y_res_ - 1; j >= 0; j--) {
         for (int32_t i = 0; i < x_res_; i++) {
-            ofs << buf_[j * x_res_ + i];
+            ofs << buf_[j * x_res_ + i] << '\n';
         }
     }
     ofs.close();
