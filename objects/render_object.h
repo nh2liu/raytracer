@@ -26,7 +26,7 @@ class RenderObject {
     virtual Vec3 normal(const Vec3 poi) const = 0;
 
     // getting and setting material
-    Material *getMaterial();
+    Material *getMaterial() const;
     void setMaterial(Material *m);
 };
 
