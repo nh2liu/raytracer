@@ -6,7 +6,8 @@
 class Metal : public Material {
   public:
     Metal(const RGBUnit &attenuation);
-    Vec3 scatter(const Ray &r, const RenderObject *obj, const float t) const override;
+    Vec3 scatter(RNGGenerator &rng_generator, const Ray &r,
+                 const RenderObject *obj, const float t) const override;
 };
 
 #endif

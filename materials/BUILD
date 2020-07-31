@@ -3,6 +3,6 @@ cc_library(
   hdrs = glob(["*.h"]),
   srcs = glob(["*.cc"]),
   copts = ['-O2'],
-  deps = ['//primitives:primitives', '//objects:objects'],
+  deps = ['//primitives:primitives', '//objects:objects', '//util:util'],
   visibility = ["//main:__pkg__"],
 )

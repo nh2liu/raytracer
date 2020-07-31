@@ -6,10 +6,13 @@ cc_binary(
     "@png_pp//:png_pp",
     "//primitives:primitives",
     "//materials:materials",
-    "//objects:objects"
+    "//objects:objects",
+    '//util:util',
   ],
-  copts = ['-O2'],
+  copts = ['-O2', '-fopenmp'],
   linkopts = [
     '-lpng16', #for png++ library
+    '-fopenmp',
+    '-ffast-math',
   ]
 )

@@ -5,7 +5,8 @@
 class Lambertian : public Material {
   public:
     Lambertian(const RGBUnit &attenuation);
-    Vec3 scatter(const Ray &r, const RenderObject *obj, const float t) const override;
+    Vec3 scatter(RNGGenerator &rng_generator, const Ray &r,
+                 const RenderObject *obj, const float t) const override;
 };
 
 #endif

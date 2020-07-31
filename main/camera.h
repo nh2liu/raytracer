@@ -7,6 +7,7 @@
 #include "primitives/ray.h"
 #include "primitives/rgb_unit.h"
 #include "primitives/vec3.h"
+#include "util/rng.h"
 
 class SceneManager;
 class RenderObject;
@@ -22,7 +23,8 @@ class Camera {
     uint32_t aliasing_its_;
     uint32_t max_bounces_;
 
-    RGBUnit color(const Ray &r, const std::vector<RenderObject *> &objects,
+    RGBUnit color(RNGGenerator &rng_generator, const Ray &r,
+                  const std::vector<RenderObject *> &objects,
                   uint32_t bounces = 0) const;
 
   public:
