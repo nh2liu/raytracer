@@ -7,9 +7,8 @@ Lambertian::Lambertian(const RGBUnit &attenuation) : Material(attenuation) {}
 Vec3 randomUnitSphereVec(RNGGenerator &rng_generator) {
     Vec3 rng;
     do {
-        rng = 2.0 * Vec3(rng_generator.uniform(), rng_generator.uniform(),
-                         rng_generator.uniform()) -
-              Vec3(1, 1, 1);
+        rng = Vec3(rng_generator.uniform(-1, 1), rng_generator.uniform(-1, 1),
+                   rng_generator.uniform(-1, 1));
     } while (rng.mag() >= 1);
     return rng;
 }
